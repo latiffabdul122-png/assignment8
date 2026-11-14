@@ -20,6 +20,7 @@ app.use((req, res, next) => {
 });
 
 // Custom Middleware 2: Request Counter
+// Increments the global counter for every incoming HTTP request
 app.use((req, res, next) => {
     requestsServed++;
     next();
