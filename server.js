@@ -1,4 +1,3 @@
-
 import express from 'express';
 
 const app = express();
@@ -13,9 +12,38 @@ const COURSES = [
 
 let requestsServed = 0;
 
-// Test route
+// Custom Middleware 1: Request Logger
+app.use((req, res, next) => {
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] ${req.method} ${req.url}`);
+    next();
+});
+
+// Custom Middleware 2: Request Counter
+app.use((req, res, next) => {
+    requestsServed++;
+    next();
+});
+
+// Built-in Middleware to serve static files from 'public' directory
+app.use(express.static('public'));
+
+// API Routes
+app.get('/api/courses', (req, res) => {
+    res.json(COURSES);
+});
+
+app.get('/api/stats', (req, res) => {
+    res.json({
+        totalRequests: requestsServed,
+        uptime: process.uptime(),
+        timestamp: new Date()
+    });
+});
+
+// Root Route
 app.get('/', (req, res) => {
-    res.send("Server is running!");
+    res.send('Welcome to Assignment 8 Express Server!');
 });
 
 // Start Server
