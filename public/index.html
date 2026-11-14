@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 8 - Express Server</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f9; color: #333; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #eee; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Welcome to Assignment 8</h1>
+        <p>This page is served statically by Express middleware from the <code>/public</code> directory.</p>
+    </div>
+
+    <div class="card">
+        <h2>API Actions</h2>
+        <button onclick="fetchCourses()">Fetch Courses</button>
+        <button onclick="fetchStats()">Fetch Server Stats</button>
+        <pre id="output">Click a button to see API data...</pre>
+    </div>
+
+    <script>
+        async function fetchCourses() {
+            try {
+                const res = await fetch('/api/courses');
+                const data = await res.json();
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                document.getElementById('output').textContent = 'Error fetching courses: ' + err.message;
+            }
+        }
+
+        async function fetchStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const data = await res.json();
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+            } catch (err) {
+                document.getElementById('output').textContent = 'Error fetching stats: ' + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
