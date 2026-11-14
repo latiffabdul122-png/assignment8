@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 
 // Built-in Middleware to serve static files from 'public' directory
 app.use(express.static('public'));
-
+// Returns the list of available university courses in JSON format
 // API Routes
 app.get('/api/courses', (req, res) => {
     res.json(COURSES);
